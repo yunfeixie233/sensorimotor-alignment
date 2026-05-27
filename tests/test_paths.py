@@ -29,14 +29,15 @@ def test_all_paths():
         ("DATA_STORE", config.DATA_STORE),
         ("RECORD_DIR", config.RECORD_DIR),
         ("META_CSV", config.META_CSV),
-        ("CKPT_STARVLA_DIR", config.CKPT_STARVLA_DIR),
     ]
 
     # Optional checkpoints: not required at Setup time. The GR00T-N1.5/N1.6
-    # checkpoints are downloaded later by the VLA-SR Feature extraction loop;
-    # the OpenVLA / RT-1X / Prismatic checkpoints are not used by any paper
-    # experiment. Missing -> warn, do not fail.
+    # and StarVLA checkpoints are downloaded inline by the VLA-SR Feature
+    # extraction loop (`hf download` to checkpoints/<HF_ID>/); the OpenVLA /
+    # RT-1X / Prismatic checkpoints are not used by any paper experiment.
+    # Missing -> warn, do not fail.
     optional_checks = [
+        ("CKPT_STARVLA_DIR", config.CKPT_STARVLA_DIR),
         ("CKPT_GROOT_N15", config.CKPT_GROOT_N15),
         ("CKPT_GROOT_N16", config.CKPT_GROOT_N16),
         ("CKPT_OPENVLA_7B", config.CKPT_OPENVLA_7B),

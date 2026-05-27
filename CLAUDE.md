@@ -132,7 +132,7 @@ conda run -n starVLA python compute/compute_cknna.py …
 ## Tests
 
 ```bash
-conda run -n starVLA python tests/test_paths.py       # 18 required paths OK + 6 optional may be MISSING pre-extraction
+conda run -n starVLA python tests/test_paths.py       # 17 required paths OK + 7 optional may be MISSING pre-extraction
 conda run -n starVLA python tests/test_imports.py     # 10 modules import
 bash tests/verify_envs.sh                             # 11 OK / 0 failed (all conda envs)
 bash extractors/run_all7_smoke.sh                     # N=10 across 8 raw VLMs (GPU, requires HF_TOKEN)

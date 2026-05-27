@@ -96,7 +96,7 @@ conda activate starVLA
 pip install adjustText                              # used by figure scripts
 
 # Verify the install
-conda run -n starVLA python tests/test_paths.py     # → 18 required OK (6 optional may be missing pre-extraction)
+conda run -n starVLA python tests/test_paths.py     # → 17 required OK (7 optional may be missing pre-extraction)
 conda run -n starVLA python tests/test_imports.py   # → 10 passed
 ```
 
@@ -357,6 +357,8 @@ conda run -n starVLA python data/load_droid_rlds.py \
 
 **The §3.2 headline figure uses `feats_A.pt` (LLM-out V+T) at trajectory horizon `h=3`.** The §4.1 modality-decomposition diagnostic uses the three LLM-out variants `feats_A_img.pt`, `feats_A_txt.pt`, and `feats_A.pt`.
 
+> The two PaliGemma models below are gated on HuggingFace. Accept the license on https://huggingface.co/google/paligemma-3b-mix-224 and https://huggingface.co/google/paligemma2-3b-mix-224, then export `HF_TOKEN=hf_…` (or set it in `paths.env`) before running the loop.
+
 ```bash
 # (HuggingFace model id, model_family flag, output directory name)
 declare -A VLMS=(
@@ -609,7 +611,7 @@ Four diagnostic experiments use S² as **a lens on how design choices shape wher
 
 ### §4.1: Modality decomposition
 
-Having established that S² predicts downstream success, we decompose the sensory representation to isolate the contributions of vision and text. We analyze the VLM outputs consumed by the action head across three modalities: vision-only, text-only, and vision-and-text fused. At a representative horizon h=3, vision-and-text is the strongest predictor for both fine-tuned VLAs and raw VLMs (r ≈ +0.70, p < 0.05), while text-only collapses below significance (r=+0.238 for VLAs). This experiment reuses every stage of [Reproducing VLA-SR](#reproducing-vla-sr) through S² scoring; only the figure step below is new.
+Having established that S² predicts downstream success, we decompose the sensory representation to isolate the contributions of vision and text. We analyze the VLM outputs consumed by the action head across three modalities: vision-only, text-only, and vision-and-text fused. At a representative horizon h=3, vision-and-text is the strongest predictor for both fine-tuned VLAs and raw VLMs (r ≈ +0.70, p < 0.05), while text-only collapses below significance (r=+0.238 for VLAs). This experiment reuses every stage of [Reproducing VLA-SR](#reproducing-vla-sr) and [Reproducing VLM-SR](#reproducing-vlm-sr) through S² scoring (the 2×3 figure plots the VLA cohort in the top row and the raw VLM cohort in the bottom row); only the figure step below is new.
 
 ```bash
 conda run -n starVLA python record/fig_4.1_vt_what_carries_2x3/code/regen_what_carries_2x3.py
@@ -793,7 +795,7 @@ A quick CPU-only validation that the install works without running any experimen
 
 ```bash
 # paths.env resolves and the pipeline modules import
-conda run -n starVLA python tests/test_paths.py        # → 18 required OK
+conda run -n starVLA python tests/test_paths.py        # → 17 required OK
 conda run -n starVLA python tests/test_imports.py      # → 10 passed
 
 # Self-contained DTW + CKNNA demo (~ 350 KB of fixture data, no model needed)

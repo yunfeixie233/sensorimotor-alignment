@@ -1,8 +1,9 @@
 """
 Phase 1 (full): Load Bridge V2 data from local RLDS TFRecord files.
 
-Reads directly from /home/ubuntu/verl/openvla/datasets/bridge_orig/1.0.0/
-(124 GB, 1024 train shards, ~53K episodes).  No network downloads required.
+Reads RLDS TFRecord shards from $BRIDGE_RLDS_DIR (set in paths.env;
+default $WORK/datasets/openvla/bridge_orig/1.0.0), 124 GB,
+1024 train shards, ~53K episodes. No network downloads required.
 
 State:  7D [x, y, z, roll, pitch, yaw, gripper] (already without pad)
 Action: 7D [dx, dy, dz, droll, dpitch, dyaw, dgripper]
@@ -44,7 +45,8 @@ os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
 import tensorflow as tf
 
 RLDS_DIR = os.environ.get(
-    "BRIDGE_RLDS_DIR", "/home/ubuntu/verl/openvla/datasets/bridge_orig/1.0.0"
+    "BRIDGE_RLDS_DIR",
+    os.path.expanduser("~/vla/datasets/openvla/bridge_orig/1.0.0"),
 )
 STATE_DIM = 7
 ACTION_DIM = 7

@@ -1,8 +1,9 @@
 """
 Phase 1: Load DROID v1.0.1 data from local RLDS TFRecord files.
 
-Reads directly from /home/ubuntu/verl/droid/data/droid/1.0.1/
-(2048 train shards, ~76-94K episodes, Franka Panda).
+Reads RLDS TFRecord shards from $DROID_RLDS_DIR (set in paths.env;
+default $WORK/datasets/droid/1.0.1), 2048 train shards, ~76-94K
+episodes, Franka Panda.
 
 State (primary):  7D [x, y, z, roll, pitch, yaw, gripper]
                   (observation/cartesian_position + observation/gripper_position)
@@ -67,7 +68,8 @@ os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
 import tensorflow as tf
 
 RLDS_DIR = os.environ.get(
-    "DROID_RLDS_DIR", "/home/ubuntu/verl/droid/data/droid/1.0.1"
+    "DROID_RLDS_DIR",
+    os.path.expanduser("~/vla/datasets/droid/1.0.1"),
 )
 SHARD_GLOB = "droid_101-train.tfrecord-*-of-02048"
 CART_DIM = 6
