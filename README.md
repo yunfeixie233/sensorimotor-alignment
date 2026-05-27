@@ -505,27 +505,58 @@ That is 7 V + 7 A + 1 T = 15 positions, written as `feats_A_v_b7.pt`, `feats_A_a
 
 **The §3.3 headline figure uses `V-B7` (vision at video-transformer block 7) at trajectory horizon `h=15`.** The §4.2 denoising-step diagnostic uses `V-Norm` instead, sweeping across five points of each WAM's native denoising schedule. The §4.3 per-layer diagnostic uses all seven V-* positions and finds the strongest S² at `V-B14` in all three WAMs.
 
-Each WAM extractor takes the WAM checkpoint plus the upstream video backbone components: Wan2.2 VAE, Wan2.2-TI2V-5B, and a Qwen3-VL text encoder, depending on the WAM. Point `$CKPT_*` at your local checkpoint directories.
+Each WAM extractor needs (a) the WAM-specific checkpoint and (b) the shared Wan2.2-TI2V-5B video backbone. The Qwen3-VL text encoder used by Motus is fetched directly by its HuggingFace ID, so only one HF download is needed for the shared backbone; the three WAM-specific checkpoints come from their respective project pages.
 
 ```bash
-# Motus (Wan2.2-TI2V-5B backbone + Qwen3-VL text encoder)
+# Where to place the WAM checkpoints — change WAM_CKPT freely.
+WAM_CKPT="${WORK}/checkpoints"
+mkdir -p "$WAM_CKPT"
+
+# (a) Shared Wan2.2-TI2V-5B video backbone (~10 GB; used by both Motus and Vidar).
+#     The Motus extractor reads ${WAM_CKPT}/Wan2.2-TI2V-5B/Wan2.2_VAE.pth and
+#     ${WAM_CKPT}/Wan2.2-TI2V-5B/config.json, so it must be a local directory.
+conda run -n starVLA hf download Wan-AI/Wan2.2-TI2V-5B-Diffusers \
+    --local-dir "${WAM_CKPT}/Wan2.2-TI2V-5B"
+
+# (b) Motus_robotwin2 (DeepSpeed snapshot, ~5 GB). Download from the Motus
+#     project page (https://github.com/jasper0314-huang/Motus) and extract so
+#     that the directory contains mp_rank_00_model_states.pt + config.json:
+#     ${WAM_CKPT}/Motus_robotwin2/mp_rank_00_model_states.pt
+#     ${WAM_CKPT}/Motus_robotwin2/config.json
+
+# (c) Vidar (~3 GB single-file overlay on top of Wan2.2-TI2V-5B). Download
+#     vidar.pt from the Vidar project page (https://github.com/SgtVincent/Vidar)
+#     and save as ${WAM_CKPT}/vidar/vidar.pt.
+
+# (d) LingBot-VA (custom Wan2.2 fine-tune split into 4 sub-modules, ~12 GB).
+#     Obtain from the LingBot-VA project page (https://github.com/LingBot-AI)
+#     and place the sub-modules as:
+#     ${WAM_CKPT}/lingbot-va/{transformer,vae,text_encoder,tokenizer}/
+```
+
+Then run the three extractors:
+
+```bash
+# Motus — --vlm_path accepts a bare HuggingFace ID, no local copy needed.
 conda run -n motus python extractors/motus/extract_features.py \
-    --checkpoint_path "$CKPT_MOTUS" \
-    --wan_path        "$CKPT_WAN22_TI2V_5B" \
-    --vlm_path        "$CKPT_QWEN3_VL_2B_INSTRUCT" \
+    --checkpoint_path "${WAM_CKPT}/Motus_robotwin2" \
+    --wan_path        "${WAM_CKPT}/Wan2.2-TI2V-5B" \
+    --vlm_path        "Qwen/Qwen3-VL-2B-Instruct" \
     --data_dir        "$DATA_STORE/cknna_data_aloha" \
     --output_dir      "$DATA_STORE/cknna_data_aloha_15feat/motus"
 
 # LingBot-VA (Wan2.2 transformer + VAE + T5 text encoder)
 conda run -n lingbot_va python extractors/lingbot_va/extract_features.py \
-    --transformer_path  "$CKPT_LINGBOT_VA_TRANSFORMER" \
-    --vae_path          "$CKPT_LINGBOT_VA_VAE" \
-    --text_encoder_path "$CKPT_LINGBOT_VA_T5" \
-    --tokenizer_path    "$CKPT_LINGBOT_VA_TOKENIZER" \
+    --transformer_path  "${WAM_CKPT}/lingbot-va/transformer" \
+    --vae_path          "${WAM_CKPT}/lingbot-va/vae" \
+    --text_encoder_path "${WAM_CKPT}/lingbot-va/text_encoder" \
+    --tokenizer_path    "${WAM_CKPT}/lingbot-va/tokenizer" \
     --data_dir          "$DATA_STORE/cknna_data_aloha" \
     --output_dir        "$DATA_STORE/cknna_data_aloha_15feat/lingbot-va"
 
-# Vidar
+# Vidar — picks up the Wan2.2 base and vidar.pt via two env vars.
+CKPT_WAN22_TI2V_5B="${WAM_CKPT}/Wan2.2-TI2V-5B" \
+CKPT_VIDAR="${WAM_CKPT}/vidar/vidar.pt" \
 conda run -n vidar python extractors/extract_va_features_vidar_droid.py \
     --data_dir   "$DATA_STORE/cknna_data_aloha" \
     --output_dir "$DATA_STORE/cknna_data_aloha_15feat/vidar"
@@ -586,13 +617,24 @@ conda run -n starVLA python record/fig_4.1_vt_what_carries_2x3/code/regen_what_c
 
 ### §4.2: Freeze-vs-unfreeze ablation
 
-[VLM4VLA](https://arxiv.org/pdf/2601.03309) reports that freezing the vision encoder during VLA fine-tuning severely degrades downstream robotics performance, but the representation-level cause has been unclear. Following the VLM4VLA recipe, we attach an FCDecoder action head to Qwen2.5-VL-3B and fine-tune on BridgeDataV2 under two matched settings, frozen versus unfrozen vision encoder, then compute vision-text S² at the layer input to the action head. Freezing the encoder reduces S² by 41% and downstream success by 40%. The aligned degradation says end-to-end fine-tuning improves control by reshaping the vision encoder toward stronger sensorimotor alignment, and freezing locks it away from that reshaping. Dataset preparation, motor kernel, and S² scoring are reused from [Reproducing VLA-SR](#reproducing-vla-sr); only the new Qwen variants are processed in feature extraction. Point `$CKPT_VLM4VLA_*` at your local VLM4VLA checkpoints.
+[VLM4VLA](https://arxiv.org/pdf/2601.03309) reports that freezing the vision encoder during VLA fine-tuning severely degrades downstream robotics performance, but the representation-level cause has been unclear. Following the VLM4VLA recipe, we attach an FCDecoder action head to Qwen2.5-VL-3B and fine-tune on BridgeDataV2 under two matched settings, frozen versus unfrozen vision encoder, then compute vision-text S² at the layer input to the action head. Freezing the encoder reduces S² by 41% and downstream success by 40%. The aligned degradation says end-to-end fine-tuning improves control by reshaping the vision encoder toward stronger sensorimotor alignment, and freezing locks it away from that reshaping. Dataset preparation, motor kernel, and S² scoring are reused from [Reproducing VLA-SR](#reproducing-vla-sr); only the two new Qwen variants are processed in feature extraction.
 
 ```bash
-# Feature extraction: from the two ablation checkpoints
-for tag in freezevis step10k; do
+# Download the two VLM4VLA freeze-ablation checkpoints (each ~12 GB).
+VLM4VLA_DIR="${WORK}/checkpoints"
+mkdir -p "$VLM4VLA_DIR"
+for tag in step10k freezevis; do
+    conda run -n starVLA hf download "yunfeixie/vlm4vla-qwen25vl3b-bridge-$tag" \
+        --local-dir "${VLM4VLA_DIR}/vlm4vla-qwen25vl3b-bridge-$tag"
+done
+
+# Feature extraction. Each HF bundle ships one `*.fp32.pt` file; auto-pick it.
+# --base_vlm_path takes the bare HuggingFace ID, no local copy needed.
+for tag in step10k freezevis; do
+    local_dir="${VLM4VLA_DIR}/vlm4vla-qwen25vl3b-bridge-$tag"
+    ckpt_pt=$(ls "$local_dir"/*.fp32.pt 2>/dev/null | head -1)
     conda run -n starVLA python extractors/extract_7feat_vlm4vla.py \
-        --ckpt_path     "$CKPT_VLM4VLA_QWEN25VL3B_BRIDGE_$tag" \
+        --ckpt_path     "$ckpt_pt" \
         --base_vlm_path Qwen/Qwen2.5-VL-3B-Instruct \
         --data_dir      "$DATA_STORE/cknna_data_droid" \
         --output_dir    "$DATA_STORE/cknna_data_droid_7feat/vlm4vla-qwen25vl3b-bridge-$tag"
