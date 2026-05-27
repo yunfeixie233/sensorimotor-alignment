@@ -1,0 +1,61 @@
+cohort,modality,model,sima,sr
+VLA-finetuned,Vision-Only,Qwen-GR00T-Bridge,0.035425,71.4
+VLA-finetuned,Text-Only,Qwen-GR00T-Bridge,0.019224,71.4
+VLA-finetuned,Vision + Text,Qwen-GR00T-Bridge,0.036336,71.4
+VLA-finetuned,Vision-Only,Qwen-GR00T-Bridge-RT-1,0.034951,63.6
+VLA-finetuned,Text-Only,Qwen-GR00T-Bridge-RT-1,0.022379,63.6
+VLA-finetuned,Vision + Text,Qwen-GR00T-Bridge-RT-1,0.035318,63.6
+VLA-finetuned,Vision-Only,Qwen-OFT-Bridge-RT-1,0.023374,44.2
+VLA-finetuned,Text-Only,Qwen-OFT-Bridge-RT-1,0.018451,44.2
+VLA-finetuned,Vision + Text,Qwen-OFT-Bridge-RT-1,0.024196,44.2
+VLA-finetuned,Vision-Only,Qwen3VL-GR00T-Bridge-RT-1,0.027396,65.3
+VLA-finetuned,Text-Only,Qwen3VL-GR00T-Bridge-RT-1,0.015762,65.3
+VLA-finetuned,Vision + Text,Qwen3VL-GR00T-Bridge-RT-1,0.029174,65.3
+VLA-finetuned,Vision-Only,Qwen3VL-OFT-Bridge-RT-1,0.024766,42.7
+VLA-finetuned,Text-Only,Qwen3VL-OFT-Bridge-RT-1,0.013646,42.7
+VLA-finetuned,Vision + Text,Qwen3VL-OFT-Bridge-RT-1,0.025381,42.7
+VLA-finetuned,Vision-Only,cogact-base-bridge,0.031897,51.3
+VLA-finetuned,Text-Only,cogact-base-bridge,0.036842,51.3
+VLA-finetuned,Vision + Text,cogact-base-bridge,0.032419,51.3
+VLA-finetuned,Vision-Only,cogact-large-bridge,0.031716,58.3
+VLA-finetuned,Text-Only,cogact-large-bridge,0.037918,58.3
+VLA-finetuned,Vision + Text,cogact-large-bridge,0.032802,58.3
+VLA-finetuned,Vision-Only,cogact-small-bridge,0.031314,51.0
+VLA-finetuned,Text-Only,cogact-small-bridge,0.030003,51.0
+VLA-finetuned,Vision + Text,cogact-small-bridge,0.031852,51.0
+VLA-finetuned,Vision-Only,groot-n15-bridge,0.023773,36.5
+VLA-finetuned,Text-Only,groot-n15-bridge,0.009891,36.5
+VLA-finetuned,Vision + Text,groot-n15-bridge,0.024013,36.5
+VLA-finetuned,Vision-Only,groot-n16-bridge,0.025767,57.1
+VLA-finetuned,Text-Only,groot-n16-bridge,0.008195,57.1
+VLA-finetuned,Vision + Text,groot-n16-bridge,0.025535,57.1
+VLA-finetuned,Vision-Only,pi0-lerobot-bridge,0.017369,47.9
+VLA-finetuned,Text-Only,pi0-lerobot-bridge,0.016075,47.9
+VLA-finetuned,Vision + Text,pi0-lerobot-bridge,0.017397,47.9
+VLA-finetuned,Vision-Only,spatialvla-sft-bridge,0.021941,42.7
+VLA-finetuned,Text-Only,spatialvla-sft-bridge,0.014461,42.7
+VLA-finetuned,Vision + Text,spatialvla-sft-bridge,0.02173,42.7
+VLM-raw,Vision-Only,kosmos2-raw,0.020563,60.4
+VLM-raw,Text-Only,kosmos2-raw,0.013212,60.4
+VLM-raw,Vision + Text,kosmos2-raw,0.020887,60.4
+VLM-raw,Vision-Only,paligemma1-raw,0.018213,55.3
+VLM-raw,Text-Only,paligemma1-raw,0.01552,55.3
+VLM-raw,Vision + Text,paligemma1-raw,0.018408,55.3
+VLM-raw,Vision-Only,paligemma2-raw,0.019063,57.3
+VLM-raw,Text-Only,paligemma2-raw,0.013632,57.3
+VLM-raw,Vision + Text,paligemma2-raw,0.01943,57.3
+VLM-raw,Vision-Only,qwen25vl-3b-raw,0.017714,48.0
+VLM-raw,Text-Only,qwen25vl-3b-raw,0.012798,48.0
+VLM-raw,Vision + Text,qwen25vl-3b-raw,0.017806,48.0
+VLM-raw,Vision-Only,qwen25vl-7b-raw,0.018024,46.8
+VLM-raw,Text-Only,qwen25vl-7b-raw,0.012014,46.8
+VLM-raw,Vision + Text,qwen25vl-7b-raw,0.017486,46.8
+VLM-raw,Vision-Only,qwen3vl-2b-raw,0.02213,49.0
+VLM-raw,Text-Only,qwen3vl-2b-raw,0.012226,49.0
+VLM-raw,Vision + Text,qwen3vl-2b-raw,0.01993,49.0
+VLM-raw,Vision-Only,qwen3vl-4b-raw,0.022303,56.3
+VLM-raw,Text-Only,qwen3vl-4b-raw,0.012834,56.3
+VLM-raw,Vision + Text,qwen3vl-4b-raw,0.021067,56.3
+VLM-raw,Vision-Only,qwen3vl-8b-raw,0.02271,58.3
+VLM-raw,Text-Only,qwen3vl-8b-raw,0.01328,58.3
+VLM-raw,Vision + Text,qwen3vl-8b-raw,0.019465,58.3

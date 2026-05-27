@@ -1,0 +1,3 @@
+condition,sima,simpler_sr
+Unfrozen ViT fine-tuning,0.0245,50.0
+Frozen ViT fine-tuning,0.0144,30.21

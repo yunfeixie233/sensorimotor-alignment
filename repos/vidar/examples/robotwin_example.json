@@ -1,0 +1,17 @@
+[
+    {
+        "prompt": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: using left arm, pick up the bottle on the table headup with the correct arm.",
+        "filename_stem": "robotwin_aloha_3_adjust_bottle_0",
+        "media_path": "examples/images/robotwin_aloha_3_adjust_bottle_0.png"
+    },
+    {
+        "prompt": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: using left arm, pick up the bottle on the table headup with the correct arm.",
+        "filename_stem": "robotwin_aloha_3_adjust_bottle_1",
+        "media_path": "examples/images/robotwin_aloha_3_adjust_bottle_1.png"
+    },
+    {
+        "prompt": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: using left arm, pick up the bottle on the table headup with the correct arm.",
+        "filename_stem": "robotwin_aloha_3_adjust_bottle_10",
+        "media_path": "examples/images/robotwin_aloha_3_adjust_bottle_10.png"
+    }
+]

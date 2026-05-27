@@ -1,0 +1,15 @@
+git+https://github.com/HorizonRobotics/robo_orchard_lab.git
+pytorch_kinematics==0.7.5
+diffusers==0.32.2
+lmdb==1.6.2
+opencv_python==4.11.0.86
+Pillow==11.2.1
+safetensors==0.5.3
+scipy==1.15.2
+timm==1.0.15
+toppra==0.6.0
+tqdm==4.67.1
+transformers==4.49.0
+numpy==1.26.4
+h5py==3.13.0
+accelerate==1.4.0

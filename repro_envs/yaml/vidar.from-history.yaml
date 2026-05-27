@@ -1,0 +1,15 @@
+name: vidar
+channels:
+  - conda-forge
+dependencies:
+  - cuda=12.9
+  - ninja
+  - cuda-nvcc=12.9
+  - libgl
+  - gxx=12.4.0
+  - python=3.12
+  - gcc=12.4.0
+  - cuda-toolkit=12.9
+  - pip=25.0
+  - cmake
+prefix: /lambda/nfs/vla/conda/envs/vidar

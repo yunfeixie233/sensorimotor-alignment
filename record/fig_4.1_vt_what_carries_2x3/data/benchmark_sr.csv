@@ -1,0 +1,9 @@
+model_key,simpler_sr,libero_sr,calvin_sr,source
+qwen25vl-3b-raw,48.0,43.0,3.856,VLM4VLA
+qwen25vl-7b-raw,46.8,45.0,4.057,VLM4VLA
+qwen3vl-2b-raw,49.0,55.8,4.142,VLM4VLA
+qwen3vl-4b-raw,56.3,44.4,3.943,VLM4VLA
+qwen3vl-8b-raw,58.3,46.2,4.035,VLM4VLA
+paligemma1-raw,55.3,44.2,3.506,VLM4VLA
+paligemma2-raw,57.3,46.2,3.406,VLM4VLA
+kosmos2-raw,60.4,55.0,3.096,VLM4VLA

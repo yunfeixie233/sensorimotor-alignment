@@ -1,0 +1,9 @@
+model_key,display_name,sima,vqa_capability,simpler_sr
+kosmos2-raw,KosMos-2,0.020887,49.01,60.4
+paligemma1-raw,Paligemma-1,0.018408,50.34,55.3
+paligemma2-raw,Paligemma-2,0.01943,50.34,57.3
+qwen25vl-3b-raw,Qwen2.5VL-3B,0.017806,55.97,48.0
+qwen25vl-7b-raw,Qwen2.5VL-7B,0.017486,58.56,46.8
+qwen3vl-2b-raw,Qwen3VL-2B,0.01993,58.21,49.0
+qwen3vl-4b-raw,Qwen3VL-4B,0.021067,64.51,56.3
+qwen3vl-8b-raw,Qwen3VL-8B,0.019465,66.12,58.3

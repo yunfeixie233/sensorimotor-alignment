@@ -1,0 +1,51 @@
+experiment:
+  project: "demo"
+  name: ""
+  output_dir: ""
+
+model:
+  mmact:
+    pretrained_model_path: ""
+
+  vq_model:
+    type: "magvitv2"
+    vq_model_name: ""
+
+dataset:
+  preprocessing:
+    max_seq_length: 1024
+  dataset_file_paths: ""
+  text_annotation_paths: ""
+  
+
+training:
+  batch_size: 8
+  mmu_ignore_state: True
+  mmu_learn_eos: False #if mmu generation learn to generate <eos>
+  num_epochs: 10
+  chunk_size: 8
+  noise_type: "mask"
+  log_interval: 50
+  # max_train_steps: 1000000
+  dataprocess_nums: 16
+  action_loss_type: "single"
+  mmu_eps: 1e-3 #if predict all mmu tokens in one step,set 1.0,else set 1e-3
+  use_prev_action: False
+
+
+optimizer:
+    name: adamw
+    params: # default adamw params
+        learning_rate: 5e-5
+        scale_lr: False
+        beta1: 0.9
+        beta2: 0.999
+        weight_decay: 0.01
+        epsilon: 1e-8
+
+lr_scheduler:
+    scheduler: "cosine"
+    params:
+        learning_rate: ${optimizer.params.learning_rate}
+        warmup_steps: 500
+        min_lr_scale: 0.5

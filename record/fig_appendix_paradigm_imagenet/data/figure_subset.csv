@@ -1,0 +1,23 @@
+display,paradigm,size,sima,imagenet_top1
+MAE-Base,Reconstruction,B,0.0205,68.0
+MAE-Large,Reconstruction,L,0.0208,75.8
+MAE-Huge,Reconstruction,H,0.0208,76.6
+DINO v1-B,Self-distillation,B,0.0247,78.2
+DINOv2-Small,Self-distillation,S,0.0264,81.1
+DINOv2-Base,Self-distillation,B,0.0278,84.5
+DINOv2-Large,Self-distillation,L,0.0261,86.3
+DINOv2-Giant,Self-distillation,G,0.0257,86.5
+iBOT-Base,Self-distillation,B,0.026,79.5
+CLIP-L/14,Contrastive,L,0.024,75.3
+OpenCLIP-L/14,Contrastive,L,0.0251,75.2
+EVA-CLIP-L/14,Contrastive,L,0.0248,79.8
+SigLIP-2-Base,Contrastive,B,0.0236,78.2
+SigLIP-2-Large,Contrastive,L,0.025,83.1
+SigLIP-2-SO400M,Contrastive,SO,0.0254,84.1
+I-JEPA-H/14,JEPA,H,0.0236,79.3
+V-JEPA-L/16,JEPA,L,0.0228,74.8
+V-JEPA-H/16,JEPA,H,0.0238,75.9
+V-JEPA 2-L,JEPA,L,0.0228,83.5
+V-JEPA 2-H,JEPA,H,0.0223,83.8
+V-JEPA 2-g,JEPA,g,0.0245,84.6
+V-JEPA 2.1-g,JEPA,g,0.0235,84.8

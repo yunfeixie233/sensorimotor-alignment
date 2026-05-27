@@ -1,0 +1,25 @@
+# Basic experiment configuration (keep unchanged)
+policy_name: MM-ACT
+task_name: null
+task_config: null
+ckpt_setting: MM-ACT-text-image-action
+seed: null
+instruction_type: unseen
+
+# Add Parameters You Need
+model_path: <your model path>
+#IMPORTANT!
+ignore_state: False
+preprocessing_max_seq_length: 1120
+vq_model_path: <your vq model path>
+vocab_offset: 134656
+device: cuda:0
+timesteps: 1
+exec_steps: 6
+action_dim: 16
+training_chunk_size: 8
+# for parallel evaluation
+parallel_num: 1
+index: 0
+store_t2i: False
+t2i_ignore_state: True

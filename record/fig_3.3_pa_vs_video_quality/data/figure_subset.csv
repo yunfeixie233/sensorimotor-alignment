@@ -1,0 +1,4 @@
+model,sima,ssim,psnr,fid,robotwin_sr
+Vidar,0.099013,0.78,22.5,18.7,55.3
+Motus,0.164073,0.81,24.1,22.9,73.0
+LingBot-VA,0.169906,0.79,23.0,60.0,48.0

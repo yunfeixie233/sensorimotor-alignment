@@ -1,0 +1,66 @@
+experiment:
+  project: "demo"
+  name: ""
+  output_dir: ""
+
+model:
+  mmact:
+    pretrained_model_path: ""
+
+  vq_model:
+    type: "magvitv2"
+    vq_model_name: ""
+
+dataset:
+  combined_loader_mode: "max_size_cycle"
+  frequency_ratio: 1 #Hz = original Hz / frequency_ratio
+  original_dataset_len: True
+  preprocessing:
+    max_seq_length: 1120 #co image need to 1120-1200
+  file_paths:
+    - ""
+
+training:
+  batch_size: 2 # total batch size = batch size *(co_action + co_t2i + co_mmu), co_* = 0/1
+  co_action: True
+  co_t2i: True
+  co_mmu: True
+  mmu_ignore_state: True
+  mmu_learn_eos: False #if mmu generation learn to generate <eos>
+  t2i_ignore_state: True
+  num_epochs: 50
+  chunk_size: 8
+  noise_type: "mask"
+  log_interval: 50
+  mmu_weight: 0.05
+  action_weight: 1.0
+  t2i_weight: 0.05
+  action_type: "ee"
+  per_episode: 500
+  is_clean_data: True
+  predict_all_tokens: True #True if predict all action tokens in one step
+  predict_all_image_tokens: False #True if predict all t2i tokens in one step
+  mmu_eps: 1 #if predict all mmu tokens in one step,set 1.0,else set 1e-3
+  # max_train_steps: 1000000
+  dataprocess_nums: 16
+  action_dim: 16
+  action_loss_type: "single"
+  use_prev_action: False
+
+
+optimizer:
+    name: adamw
+    params: # default adamw params
+        learning_rate: 5e-5
+        scale_lr: False
+        beta1: 0.9
+        beta2: 0.999
+        weight_decay: 0.01
+        epsilon: 1e-8
+
+lr_scheduler:
+    scheduler: "cosine"
+    params:
+        learning_rate: ${optimizer.params.learning_rate}
+        warmup_steps: 500
+        min_lr_scale: 0.2

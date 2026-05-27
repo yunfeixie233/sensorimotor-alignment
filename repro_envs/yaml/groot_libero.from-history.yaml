@@ -1,0 +1,6 @@
+name: groot_libero
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+prefix: /lambda/nfs/vla/conda/envs/groot_libero

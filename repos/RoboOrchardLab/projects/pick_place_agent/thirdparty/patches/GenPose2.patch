@@ -1,0 +1,154 @@
+diff --git a/configs/config.py b/configs/config.py
+index 221bf28..92f6564 100644
+--- a/configs/config.py
++++ b/configs/config.py
+@@ -81,7 +81,7 @@ def get_config():
+     parser.add_argument('--retain_ratio', type=float, default=0.4, help='how much to retain in outlier removal stage')
+     
+     
+-    cfg = parser.parse_args()
++    cfg, _ = parser.parse_known_args()
+     
+     # some of these augmentation parameters are only for NOCS training
+     # dynamic zoom in parameters
+diff --git a/datasets/datasets_infer.py b/datasets/datasets_infer.py
+index 3ebfeea..c1397e8 100644
+--- a/datasets/datasets_infer.py
++++ b/datasets/datasets_infer.py
+@@ -3,7 +3,11 @@ import cv2
+ import torch
+ import copy
+ import open3d as o3d
+-
++import os
++import sys
++sys.path.append(
++    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")
++)
+ from cutoop.data_loader import Dataset, ImageMetaData
+ from utils.datasets_utils import aug_bbox_eval, get_2d_coord_np, crop_resize_by_warp_affine
+ from utils.sgpa_utils import get_bbox
+@@ -57,6 +61,14 @@ class InferDataset(object):
+         meta = Dataset.load_meta(prefix + 'meta.json')
+         return cls({'depth': depth, 'color': color, 'mask': mask, 'meta': meta}, img_size=img_size, device=device, n_pts=n_pts)
+ 
++    @classmethod
++    def alternetive_init_custom(cls, depth_img, color_img, mask_img, img_size: int=224, device='cuda', n_pts=1024):
++        depth = depth_img
++        color = color_img
++        mask = mask_img.copy()
++        mask[mask > 0] = 1
++        meta = Dataset.load_meta("data/000000_meta.json")
++        return cls({'depth': depth, 'color': color, 'mask': mask, 'meta': meta}, img_size=img_size, device=device, n_pts=n_pts)
+ 
+     def get_per_object(self, obj_idx):
+         object_mask = np.equal(self._mask, obj_idx)
+@@ -115,11 +127,9 @@ class InferDataset(object):
+         roi_depth = np.expand_dims(roi_depth, axis=0)
+         depth_valid = roi_depth > 0
+         if np.sum(depth_valid) <= 1.0:
+-            from ipdb import set_trace; set_trace()
+             assert False, "No valid depth values"
+         roi_m_d_valid = roi_mask.astype(np.bool_) * depth_valid
+         if np.sum(roi_m_d_valid) <= 1.0:
+-            from ipdb import set_trace; set_trace()
+             assert False, "No valid depth values"
+ 
+         valid = (np.squeeze(roi_depth, axis=0) > 0) * (np.squeeze(roi_mask, axis=0) > 0)
+@@ -145,7 +155,7 @@ class InferDataset(object):
+ 
+     def get_objects(self):
+         obj_idx = np.unique(self._mask)
+-        obj_idx = obj_idx[obj_idx != 255]
++        obj_idx = obj_idx[(obj_idx != 255) & (obj_idx != 0)]
+         objects = {}
+         for idx in obj_idx:
+             obj = self.get_per_object(idx)
+diff --git a/datasets/datasets_omni6dpose.py b/datasets/datasets_omni6dpose.py
+index aa6cfd0..b6df77f 100644
+--- a/datasets/datasets_omni6dpose.py
++++ b/datasets/datasets_omni6dpose.py
+@@ -10,7 +10,6 @@ import torch.utils.data as data
+ import copy
+ import json
+ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+-
+ from ipdb import set_trace
+ from time import perf_counter
+ from tqdm import tqdm
+diff --git a/networks/gf_algorithms/sde.py b/networks/gf_algorithms/sde.py
+index bf98620..b717f29 100755
+--- a/networks/gf_algorithms/sde.py
++++ b/networks/gf_algorithms/sde.py
+@@ -5,7 +5,7 @@ import torch
+ import numpy as np
+ from ipdb import set_trace
+ from scipy import integrate
+-from utils.genpose_utils import get_pose_dim
++# from utils.genpose_utils import get_pose_dim
+ 
+ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+ 
+diff --git a/networks/pts_encoder/pointnet2_utils/pointnet2/pointnet2_utils.py b/networks/pts_encoder/pointnet2_utils/pointnet2/pointnet2_utils.py
+index 97a5466..4543de0 100755
+--- a/networks/pts_encoder/pointnet2_utils/pointnet2/pointnet2_utils.py
++++ b/networks/pts_encoder/pointnet2_utils/pointnet2/pointnet2_utils.py
+@@ -5,8 +5,9 @@ import torch.nn as nn
+ from typing import Tuple
+ import sys
+ 
+-import pointnet2_cuda as pointnet2
+-
++# import pointnet2_cuda as pointnet2
++import pointnet2
++import pointnet2._ext as _ext
+ 
+ class FurthestPointSampling(Function):
+     @staticmethod
+@@ -23,10 +24,13 @@ class FurthestPointSampling(Function):
+         assert xyz.is_contiguous()
+ 
+         B, N, _ = xyz.size()
+-        output = torch.cuda.IntTensor(B, npoint)
+-        temp = torch.cuda.FloatTensor(B, N).fill_(1e10)
++        # output = torch.cuda.IntTensor(B, npoint)
++        # temp = torch.cuda.FloatTensor(B, N).fill_(1e10)
++
++        # _ext.furthest_point_sampling(B, N, npoint, xyz, temp, output)
++
++        output = _ext.furthest_point_sampling(xyz, npoint)
+ 
+-        pointnet2.furthest_point_sampling_wrapper(B, N, npoint, xyz, temp, output)
+         return output
+ 
+     @staticmethod
+@@ -55,7 +59,8 @@ class GatherOperation(Function):
+         _, C, N = features.size()
+         output = torch.cuda.FloatTensor(B, C, npoint)
+ 
+-        pointnet2.gather_points_wrapper(B, C, N, npoint, features, idx, output)
++        # pointnet2.gather_points_wrapper(B, C, N, npoint, features, idx, output)
++        output = _ext.gather_points(features, idx)
+ 
+         ctx.for_backwards = (idx, C, N)
+         return output
+@@ -172,7 +177,8 @@ class GroupingOperation(Function):
+         _, C, N = features.size()
+         output = torch.cuda.FloatTensor(B, C, nfeatures, nsample)
+ 
+-        pointnet2.group_points_wrapper(B, C, N, nfeatures, nsample, features, idx, output)
++        # pointnet2.group_points_wrapper(B, C, N, nfeatures, nsample, features, idx, output)
++        output = _ext.group_points(features, idx)
+ 
+         ctx.for_backwards = (idx, N)
+         return output
+@@ -218,7 +224,8 @@ class BallQuery(Function):
+         npoint = new_xyz.size(1)
+         idx = torch.cuda.IntTensor(B, npoint, nsample).zero_()
+ 
+-        pointnet2.ball_query_wrapper(B, N, npoint, radius, nsample, new_xyz, xyz, idx)
++        # pointnet2.ball_query_wrapper(B, N, npoint, radius, nsample, new_xyz, xyz, idx)
++        idx = _ext.ball_query(new_xyz, xyz, radius, nsample)
+         return idx
+ 
+     @staticmethod

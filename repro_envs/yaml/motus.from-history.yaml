@@ -1,0 +1,6 @@
+name: motus
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+prefix: /lambda/nfs/vla/conda/envs/motus

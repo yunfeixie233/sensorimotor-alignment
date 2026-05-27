@@ -1,0 +1,50 @@
+name: openpi
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - numpy>=1.22.4,<2.0.0
+  - imageio>=2.36.1
+  - pillow>=11.0.0
+  - flax==0.10.2
+  - tqdm
+  - typing-extensions>=4.12.2
+  - filelock>=3.16.1
+  - beartype==0.19.0
+  - rich>=14.0.0
+  - polars>=1.30.0
+  - tensorflow-cpu>=2.15
+  - pytest>=8.3.4
+  - ruff>=0.8.6
+  - pre-commit>=4.0.1
+  - ipykernel>=6.29.5
+  - ipywidgets>=8.1.5
+  - matplotlib>=3.10.0
+  - pynvml>=12.0.0
+
+  - pip:
+      - jax==0.5.3
+      - jaxtyping==0.2.36
+      - augmax>=0.3.4
+      - dm-tree>=0.1.8
+      - einops>=0.8.0
+      - equinox>=0.11.8
+      - fsspec[gcs]>=2024.6.0
+      - gym-aloha>=0.1.1
+      - ml_collections==1.0.0
+      - numpydantic>=1.6.6
+      - opencv-python>=4.10.0.84
+      - orbax-checkpoint==0.11.13
+      - sentencepiece>=0.2.0
+      - tqdm-loggable>=0.2
+      - tyro>=0.9.5
+      - wandb>=0.19.1
+      - treescope>=0.1.7
+      - transformers==4.48.1
+      # - dlimp @ git+https://github.com/kvablack/dlimp@ad72ce3a9b414db2185bc0b38461d4101a65477a
+      # - lerobot @ git+https://github.com/huggingface/lerobot@0cf864870cf29f4738d3ade893e6fd13fbd7cdb5
+      - ml-dtypes
+      - tensorstore==0.1.74
+      - tensorflow-datasets==4.9.9

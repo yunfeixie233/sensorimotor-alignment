@@ -1,0 +1,17 @@
+model_key,success_rate,benchmark,huggingface_path,group,excluded,exclude_reason
+Qwen-GR00T-Bridge,71.4,WidowX,StarVLA/Qwen-GR00T-Bridge,StarVLA-Qwen2.5,false,
+Qwen-GR00T-Bridge-RT-1,63.6,WidowX,StarVLA/Qwen-PI-Bridge-RT-1,StarVLA-Qwen2.5,false,
+Qwen-OFT-Bridge-RT-1,44.2,WidowX,StarVLA/Qwen-OFT-Bridge-RT-1,StarVLA-Qwen2.5,false,
+Qwen3VL-GR00T-Bridge-RT-1,65.3,WidowX,StarVLA/Qwen3VL-GR00T-Bridge-RT-1,StarVLA-Qwen3,false,
+Qwen3VL-OFT-Bridge-RT-1,42.7,WidowX,StarVLA/Qwen3VL-OFT-Bridge-RT-1,StarVLA-Qwen3,false,
+cogact-small-bridge,51.0,WidowX,CogACT/CogACT-Small,CogACT,false,
+cogact-base-bridge,51.3,WidowX,CogACT/CogACT-Base,CogACT,false,
+cogact-large-bridge,58.3,WidowX,CogACT/CogACT-Large,CogACT,false,
+groot-n15-bridge,36.5,WidowX,ShuaiYang03/GR00T-N1.5-Lerobot-SimplerEnv-BridgeV2,GR00T,false,
+groot-n16-bridge,57.1,WidowX,nvidia/GR00T-N1.6-bridge,GR00T,false,
+pi0-lerobot-bridge,47.9,WidowX,HaomingSong/lerobot-pi0-bridge,Pi0,false,
+spatialvla-sft-bridge,42.7,WidowX,IPEC-COMMUNITY/spatialvla-4b-224-sft-bridge,SpatialVLA,false,
+openvla-7b-bridge,1.0,WidowX,openvla/openvla-7b,OpenVLA,true,P2-T/P2-VT extraction bug: hook_layer0_pre overwrites during generate() autoregressive steps
+openvla-7b-bridge-ft-200k,10.4,WidowX,YixangSun/openvla-bridge-sft,OpenVLA,true,FT variant of excluded base model; not independently evaluated
+vlm4vla-qwen25vl3b-bridge-step10k,50.00,WidowX,yunfeixie/vlm4vla-qwen25vl3b-bridge-step10k,VLM4VLA,false,
+vlm4vla-qwen25vl3b-bridge-freezevis,30.21,WidowX,yunfeixie/run_b_best,VLM4VLA,false,

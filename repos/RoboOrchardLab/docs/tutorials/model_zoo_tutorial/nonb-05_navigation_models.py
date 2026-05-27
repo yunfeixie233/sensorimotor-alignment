@@ -1,0 +1,316 @@
+# Project RoboOrchard
+#
+# Copyright (c) 2024-2025 Horizon Robotics. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+# implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+# ruff: noqa: E501 D415 D205 E402
+
+"""Model Zoo: Loading Pre-trained Navigation Models
+=================================================================
+
+This tutorial demonstrates how to load and use the pre-trained
+State-of-the-Art (SOTA) navigation models provided by the
+**RoboOrchardLab**.
+"""
+
+# %%
+# Aux-Think: Exploring Reasoning Strategies for Data-Efficient Vision-Language Navigation
+# --------------------------------------------------------------------------------------------
+#
+# `Click here to visit the homepage. <https://horizonrobotics.github.io/robot_lab/aux-think/index.html>`__
+#
+# Loading Pretrained Model
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# .. code-block:: python
+#
+#   import torch
+#   from robo_orchard_lab.models import TorchModelMixin
+#
+#   model: torch.nn.Module = TorchModelMixin.load_model("hf://HorizonRobotics/Aux-Think")
+#
+# Inference Pipeline
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# .. code-block:: python
+#
+#   import torch
+#   from robo_orchard_lab.pipeline.inference import InferencePipelineMixin
+#   from robo_orchard_lab.models.aux_think.processor import AuxThinkInput
+#
+#   # -----------------------------
+#   # Step 1. Load a saved pipeline
+#   # -----------------------------
+#   pipeline = InferencePipelineMixin.load_pipeline("hf://HorizonRobotics/Aux-Think")
+#   pipeline.model.eval()
+#
+#   # -----------------------------
+#   # Step 2. Prepare raw input
+#   # -----------------------------
+#   data = AuxThinkInput(
+#       image_paths=[
+#           "hf://HorizonRobotics/Aux-Think/data_example/rgb_0.png",
+#           "hf://HorizonRobotics/Aux-Think/data_example/rgb_1.png",
+#           "hf://HorizonRobotics/Aux-Think/data_example/rgb_2.png",
+#           "hf://HorizonRobotics/Aux-Think/data_example/rgb_3.png",
+#           "hf://HorizonRobotics/Aux-Think/data_example/rgb_4.png",
+#           "hf://HorizonRobotics/Aux-Think/data_example/rgb_5.png",
+#           "hf://HorizonRobotics/Aux-Think/data_example/rgb_6.png",
+#           "hf://HorizonRobotics/Aux-Think/data_example/rgb_7.png",
+#       ],
+#       instruction="Walk down the hallway to the right of the billiards table. Stop at the top of the staircase."
+#   )
+#
+#   # -----------------------------
+#   # Step 3. Run inference
+#   # (pre_process → collate → model → post_process)
+#   # -----------------------------
+#   result = pipeline(data)
+#   print(result.text)
+#
+#   # Example Output:
+#   # "The next action is turn right 15 degrees, move forward 50 cm, turn right 15 degrees."
+#
+#   # -----------------------------
+#   # Step 4. Batch inference (optional)
+#   # -----------------------------
+#   batch_data = [data, data]
+#   batch_results = list(pipeline(batch_data))
+#   for r in batch_results:
+#       print(r.text)
+
+# %%
+# MonoDream: Monocular Vision-Language Navigation with Panoramic Dreaming
+# --------------------------------------------------------------------------------------------
+#
+# `Click here to visit the homepage. <https://horizonrobotics.github.io/robot_lab/monodream/index.html>`__
+#
+# Loading Pretrained Model
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# .. code-block:: python
+#
+#   import torch
+#   from robo_orchard_lab.models import TorchModelMixin
+#
+#   model: torch.nn.Module = TorchModelMixin.load_model("hf://HorizonRobotics/MonoDream")
+#
+# Inference Pipeline
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# .. code-block:: python
+#
+#   import torch
+#   from robo_orchard_lab.pipeline.inference import InferencePipelineMixin
+#   from robo_orchard_lab.models.monodream.processor import MonoDreamInput
+#
+#   # -----------------------------
+#   # Step 1. Load a saved pipeline
+#   # -----------------------------
+#   directory = "hf://HorizonRobotics/MonoDream"
+#   pipeline = InferencePipelineMixin.load_pipeline(directory)
+#   pipeline.model.init_components(directory)
+#   pipeline.model.eval()
+#
+#   # -----------------------------
+#   # Step 2. Prepare raw input
+#   # -----------------------------
+#   data = MonoDreamInput(
+#       image_paths=[
+#           "hf://HorizonRobotics/MonoDream/data_example/rgb_0.png",
+#           "hf://HorizonRobotics/MonoDream/data_example/rgb_1.png",
+#           "hf://HorizonRobotics/MonoDream/data_example/rgb_2.png",
+#           "hf://HorizonRobotics/MonoDream/data_example/rgb_3.png",
+#           "hf://HorizonRobotics/MonoDream/data_example/rgb_4.png",
+#           "hf://HorizonRobotics/MonoDream/data_example/rgb_5.png",
+#           "hf://HorizonRobotics/MonoDream/data_example/rgb_6.png",
+#           "hf://HorizonRobotics/MonoDream/data_example/rgb_7.png",
+#       ],
+#       instruction="Walk down the hallway to the right of the billiards table. Stop at the top of the staircase."
+#   )
+#
+#   # -----------------------------
+#   # Step 3. Run inference
+#   # (pre_process → collate → model → post_process)
+#   # -----------------------------
+#   result = pipeline(data)
+#   print(result.text)
+#
+#   # Example Output:
+#   # "The next action is turn right 15 degrees, move forward 25 cm, turn right 45 degrees."
+#
+#   # -----------------------------
+#   # Step 4. Batch inference (optional)
+#   # -----------------------------
+#   batch_data = [data, data]
+#   batch_results = list(pipeline(batch_data))
+#   for r in batch_results:
+#       print(r.text)
+
+# %%
+# Progress-Think: Semantic Progress Reasoning for Vision-Language Navigation
+# --------------------------------------------------------------------------------------------
+#
+# `Click here to visit the homepage. <https://horizonrobotics.github.io/robot_lab/progress-think/index.html>`__
+#
+# Loading Pretrained Model
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# .. code-block:: python
+#
+#   import torch
+#   from robo_orchard_lab.models import TorchModelMixin
+#
+#   action_model: torch.nn.Module = TorchModelMixin.load_model("hf://HorizonRobotics/Progress-Think/action_model")
+#   progress_model: torch.nn.Module = TorchModelMixin.load_model("hf://HorizonRobotics/Progress-Think/progress_model")
+#
+# Inference Pipeline
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# .. code-block:: python
+#
+#   import torch
+#   from robo_orchard_lab.pipeline.inference import InferencePipelineMixin
+#   from robo_orchard_lab.models.progress_think.action_processor import ActionModelInput
+#   from robo_orchard_lab.models.progress_think.progress_processor import ProgressModelInput
+#
+#   # -----------------------------
+#   # Step 1. Load a saved pipeline
+#   # -----------------------------
+#   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#   action_model_directory = "hf://HorizonRobotics/Progress-Think/action_model"
+#   progress_model_directory = "hf://HorizonRobotics/Progress-Think/progress_model"
+#   action_model_pipeline = InferencePipelineMixin.load_pipeline(action_model_directory)
+#   progress_model_pipeline = InferencePipelineMixin.load_pipeline(progress_model_directory)
+#   action_model_pipeline.model.init_components(action_model_directory)
+#   progress_model_pipeline.model.init_components(progress_model_directory)
+#   action_model_pipeline.model.to(device)
+#   progress_model_pipeline.model.to(device)
+#   action_model_pipeline.model.eval()
+#   progress_model_pipeline.model.eval()
+#
+#   # -----------------------------
+#   # Step 2. Prepare raw input
+#   # -----------------------------
+#   image_paths=[
+#           "hf://HorizonRobotics/Progress-Think/data_example/rgb_0.png",
+#           "hf://HorizonRobotics/Progress-Think/data_example/rgb_1.png",
+#           "hf://HorizonRobotics/Progress-Think/data_example/rgb_2.png",
+#           "hf://HorizonRobotics/Progress-Think/data_example/rgb_3.png",
+#           "hf://HorizonRobotics/Progress-Think/data_example/rgb_4.png",
+#           "hf://HorizonRobotics/Progress-Think/data_example/rgb_5.png",
+#           "hf://HorizonRobotics/Progress-Think/data_example/rgb_6.png",
+#           "hf://HorizonRobotics/Progress-Think/data_example/rgb_7.png",
+#       ]
+#   progress_data = ProgressModelInput(
+#       image_paths=image_paths
+#   )
+#
+#   # -----------------------------
+#   # Step 3. Run inference
+#   # -----------------------------
+#   partial_response = progress_model_pipeline(progress_data)
+#   action_data = ActionModelInput(
+#       image_paths=image_paths,
+#       instruction="Walk down the hallway to the right of the billiards table. Stop at the top of the staircase.",
+#       partial_instruction = partial_response.text
+#   )
+#   result = action_model_pipeline(action_data)
+#   print(result.text)
+#
+#   # Example Output:
+#   # "The next action is turn right 15 degrees, move forward 25 cm, turn right 45 degrees."
+
+# %%
+# MapDream: Task-Driven Map Learning for Vision-Language Navigation
+# --------------------------------------------------------------------------------------------
+#
+# `Click here to visit the homepage. <https://horizonrobotics.github.io/robot_lab/mapdream/index.html>`__
+#
+# Loading Pretrained Model
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# .. code-block:: python
+#
+#   import torch
+#   from robo_orchard_lab.models import TorchModelMixin
+#
+#   model: torch.nn.Module = TorchModelMixin.load_model("hf://HorizonRobotics/MapDream")
+#
+# Inference Pipeline
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# .. code-block:: python
+#
+#   import torch
+#   from robo_orchard_lab.inference import InferencePipelineMixin
+#   from robo_orchard_lab.models.mapdream.action_processor import (
+#       ActionModelInput,
+#   )
+#   from robo_orchard_lab.models.mapdream.progress_processor import (
+#       ProgressModelProcessor,
+#       ProgressModelInput
+#   )
+#   from robo_orchard_lab.models.mapdream.progress_model import ProgressModel
+#
+#   # -----------------------------
+#   # Step 1. Load a saved pipeline
+#   # -----------------------------
+#
+#   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#   progress_model_pipeline = ProgressModel.load_model("hf://HorizonRobotics/MapDream/progress_model")
+#   progress_model_processor = ProgressModelProcessor(cfg = None)
+#   progress_model_pipeline.to(device)
+#
+#   action_model_pipeline = InferencePipelineMixin.load_pipeline(
+#       "hf://HorizonRobotics/MapDream/action_model"
+#   )
+#   action_model_pipeline.model.init_components("hf://HorizonRobotics/MapDream/action_model")
+#   action_model_pipeline.model.to(device)
+#
+#   progress_model_pipeline.eval()
+#   action_model_pipeline.model.eval()
+#
+#   # -----------------------------
+#   # Step 2. Prepare raw input
+#   # -----------------------------
+#   image_paths=[
+#       "hf://HorizonRobotics/MapDream/data_example/rgb_0.png",
+#       "hf://HorizonRobotics/MapDream/data_example/rgb_1.png",
+#       "hf://HorizonRobotics/MapDream/data_example/rgb_2.png",
+#       "hf://HorizonRobotics/MapDream/data_example/rgb_3.png",
+#       "hf://HorizonRobotics/MapDream/data_example/rgb_4.png",
+#       "hf://HorizonRobotics/MapDream/data_example/rgb_5.png",
+#       "hf://HorizonRobotics/MapDream/data_example/rgb_6.png",
+#       "hf://HorizonRobotics/MapDream/data_example/rgb_7.png",
+#   ]
+#   instruction = "Walk down the hallway to the right of the billiards table. Stop at the top of the staircase."
+#   progress_data = ProgressModelInput(
+#       image_paths=image_paths,
+#       instruction=instruction
+#   )
+#   progress_data = progress_model_processor.pre_process(data = progress_data)
+#   gen_image = progress_model_pipeline(
+#         progress_data
+#   )
+#   image_paths.append(gen_image)
+#   data = ActionModelInput(
+#         image_paths=image_paths,
+#         instruction=instruction
+#   )
+#   response = action_model_pipeline(data).text
+#   print(response)
+#
+#   # Example Output:
+#   # "The next action is turn right 15 degrees, move forward 50 cm, turn right 15 degrees."

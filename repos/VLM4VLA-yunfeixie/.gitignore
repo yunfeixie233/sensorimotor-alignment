@@ -1,0 +1,25 @@
+.DS_Store
+__pycache__/
+*.egg-info/
+.vscode/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# local outputs / runs
+runs/
+ckpts_archive/
+.hf_home/
+
+# wandb
+wandb/
+
+# env
+.venv/
+venv/
+.env
+
+# eval-time symlink to SimplerEnv asset dir (machine-specific)
+/real_inpainting

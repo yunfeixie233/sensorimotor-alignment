@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Model weights & checkpoints
+*.pt
+*.pth
+*.bin
+*.h5
+*.hdf5
+*.ckpt
+*.safetensors
+*.onnx
+
+# Data files
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.parquet
+*.arrow
+*.tfrecord
+
+# Archives
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.gz
+*.bz2
+
+# Logs
+logs/
+
+# Record directory: track everything (scripts, CSVs, PNGs, DTW caches)
+record/**/__pycache__/
+
+# Local checkpoints (model weights, download separately)
+checkpoints/
+
+# Virtual environments
+envs/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.env.local
+
+# Misc
+Untitled
+
+# =====================================================================
+# LFS-tracked data directories (override the global *.pt, *.npy, *.png rules)
+# These contain pre-extracted subsets for reproduction WITHOUT raw RLDS datasets.
+# =====================================================================
+!cknna_data/
+!cknna_data/**/*.pt
+!cknna_data/**/*.npy
+!cknna_data/**/*.png
+!cknna_data/**/*.json
+
+# Small self-contained DTW+CKNNA demo: keep the two small .pt fixtures
+# (the larger full_*.pt and dtw_topk_*.npy regen files are still ignored
+# via compute/example/.gitignore).
+!compute/example/example_feats.pt
+!compute/example/example_trajs.pt
+
+paths.env

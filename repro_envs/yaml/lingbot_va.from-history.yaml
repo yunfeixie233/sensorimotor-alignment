@@ -1,0 +1,6 @@
+name: lingbot_va
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+prefix: /lambda/nfs/vla/conda/envs/lingbot_va
