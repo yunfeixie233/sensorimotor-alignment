@@ -1,10 +1,12 @@
 # fig_3.2_pa_vs_vqa_simpler
 
-**Paper section**: §3.2 (sec:finding-vlm-predict-vla)
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `pa-vs-vqa-simpler.tex (Figure 2)`
+**Current-paper location:** §3.2; VQA comparison
 
-**Summary**: Two-panel scatter showing S² on a raw VLM predicts the resulting VLA's SimplerEnv success rate (r=+0.681, p=0.031), while the VLM's general VQA capability does NOT (r=−0.154, p=0.642). 8 raw VLMs (KosMos-2 + PaliGemma 1/2 + Qwen2.5VL 3B/7B + Qwen3VL 2B/4B/8B).
+**Release coverage:** S² r=+0.681; VQA r=−0.154 for the 8 raw backbones.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -13,7 +15,7 @@
 - `data/cknna_vlm_droid_complete.csv`
 - `data/figure_subset.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: feats_A_variant=imgtext, h=3 (8 rows)

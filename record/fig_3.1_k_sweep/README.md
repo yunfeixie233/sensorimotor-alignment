@@ -1,10 +1,12 @@
 # fig_3.1_k_sweep
 
-**Paper section**: §3.1 (k-sensitivity, app:k-sweep)
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `inline \includegraphics{fig_cknna_r_vs_k_droid.pdf}`
+**Current-paper location:** Robustness appendix; neighbor count
 
-**Summary**: Pearson r vs mutual-kNN neighborhood size k ∈ {2, 5, 10, 15, 20} at h=7. r ∈ [+0.644, +0.717] across all k. Headline uses k=10.
+**Release coverage:** Released k-sweep analysis; summary uses h=7. The raw GPU sweep is separate from figure rendering.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -17,7 +19,7 @@
 - `data/results_k5.csv`
 - `data/summary_r_p.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: summary_r_p.csv filtered to horizon=7 (one row per k)
@@ -28,7 +30,7 @@
 
 ## Reproduce the figure
 
-The figure can be re-rendered from the committed CSVs alone (no GPU needed):
+The released figure can be rendered from the bundled inputs (no GPU needed):
 
 ```bash
 cd record/fig_3.1_k_sweep

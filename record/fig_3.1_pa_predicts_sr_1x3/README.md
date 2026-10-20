@@ -1,10 +1,12 @@
 # fig_3.1_pa_predicts_sr_1x3
 
-**Paper section**: §3.1 (sec:finding-pa-predicts-across-families)
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `pa-predicts-sr-1x3.tex (Figure 1, 3-panel headline)`
+**Current-paper location:** §3.1; earlier three-panel version
 
-**Summary**: Sensorimotor alignment (S²) predicts closed-loop success across 3 model families: 12 finetuned VLAs (r=+0.717), 8 raw VLMs (r=+0.681), 3 WAMs (r=+1.000). Single scatter with three panels.
+**Release coverage:** VLA and raw-VLM panels match the reported correlations. The WAM panel contains only 3 models; the current paper uses 6 WAMs and adds a real-robot panel.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -16,7 +18,7 @@
 - `data/figure_subset.csv`
 - `data/widowx_sr.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: VLA: feats_A_variant=imgtext, h=7 (12 rows) · VLM: feats_A_variant=imgtext, h=3 (8 rows) · WAM: feature_source=V-B7, h=15 (3 rows)

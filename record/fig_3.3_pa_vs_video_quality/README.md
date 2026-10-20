@@ -1,10 +1,12 @@
 # fig_3.3_pa_vs_video_quality
 
-**Paper section**: §3.3 (sec:finding-va-sr)
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `pa-vs-video-quality.tex (Figure 3, 1×4 composite)`
+**Current-paper location:** §3.2; video-quality comparison
 
-**Summary**: S² predicts WAM success rate on RoboTwin (r=+0.994), while per-frame video-quality metrics (SSIM r=+0.476, PSNR r=+0.381, FID r=+0.747) do not — none reach p<0.05 at n=3. 3 WAMs: Motus, LingBot-VA, Vidar.
+**Release coverage:** Older inputs: released S²/SSIM/PSNR/FID r=+0.994/+0.476/+0.381/+0.747; current paper reports +0.999/+0.558/+0.468/+0.680.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -12,7 +14,7 @@
 - `data/cknna_wam_aloha_complete.csv`
 - `data/figure_subset.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: feature_source=V-B7, horizon=15 in master_aloha (3 rows); SSIM/PSNR/FID/SR inline in script

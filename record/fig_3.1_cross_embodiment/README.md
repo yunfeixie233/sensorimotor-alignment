@@ -1,10 +1,12 @@
 # fig_3.1_cross_embodiment
 
-**Paper section**: §3.1 (cross-embodiment robustness)
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `cross-embodiment-vla.tex`
+**Current-paper location:** §3.3; reference datasets
 
-**Summary**: S²–SR correlation holds across two reference datasets (DROID and BridgeV2). DROID r=+0.717 at h=7; BridgeV2 r=+0.699 at h=15. Confirms the predictive signal is dataset-agnostic.
+**Release coverage:** Released plots give DROID r=+0.717 and BridgeDataV2 r=+0.699.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -14,7 +16,7 @@
 - `data/figure_subset.csv`
 - `data/widowx_sr.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: feats_A_variant=imgtext on both DROID and BridgeV2, per-horizon Pearson r over 12 VLAs

@@ -1,10 +1,12 @@
 # fig_3.3_va_sr_aloha_vs_droid
 
-**Paper section**: §3.3 (WAM cross-embodiment robustness)
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `va-sr-aloha-vs-droid.tex`
+**Current-paper location:** §3.3 and robustness appendix; embodiment mismatch
 
-**Summary**: S²–SR holds on ALOHA (r=+0.999) but not on DROID (r=+0.246) as reference dataset for the 3 WAMs. Indicates that the reference dataset must be embodiment-matched for WAMs.
+**Release coverage:** Three WAMs: matched ALOHA r=+0.999; single-arm DROID r=+0.246.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -13,7 +15,7 @@
 - `data/cknna_wam_droid_complete.csv`
 - `data/figure_subset.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: feature_source=V-B7, h=15 on both ALOHA and DROID masters

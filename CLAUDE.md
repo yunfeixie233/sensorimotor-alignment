@@ -19,7 +19,8 @@ move around the codebase efficiently.
 ## Repository layout (what to edit, what to read)
 
 ```
-README.md              user-facing intro + environment setup + experiment recipes
+README.md              paper overview + getting started + guide links
+docs/                  setup + self-contained experiment recipes + pipeline reference
 CLAUDE.md              this file
 paths.env              ONE-FILE machine config — edit before running anything
 config.py              Python loader for paths.env (do not import sibling scripts; they import this)
@@ -34,7 +35,7 @@ compute/               Stage 3 (compute_dtw.py / compute_dtw_aloha.py) + Stage 4
                        + example/ self-contained 350 KB CKNNA demo
 analysis/              Stage 5 supporting analyses (perception metrics, visual confound, …)
 
-record/                committed Stage-4 CSVs + figure-regen code, one folder per paper figure
+record/                released Stage-4 CSVs + figure-regen code; see coverage in record/README.md
   fig_<section>_<slug>/
     README.md          paper section, figure label, filter applied, sanity-check r
     data/              cknna_*_complete.csv (all models × features × horizons)
@@ -73,23 +74,20 @@ Activate via `conda run -n <env>` — **never `pip install` into the wrong env**
 Never hard-code dataset, checkpoint, or cache paths in Python — read them via
 `config.py`. The one place absolute paths exist is **paper-repo figure
 scripts** (`vla_idea/writing/cknna_vla/figures/*.py`), which intentionally
-hard-code `/home/ubuntu/vla/cknna_project/...` so they're `cd`-robust. On a
-fresh machine either symlink or edit those constants.
+hard-code `/home/ubuntu/vla/cknna_project/...` so they're `cd`-robust. Released plotting scripts resolve inputs relative to their own folders; current-paper sources and release inputs may differ.
 
 ### 3. CSVs in `record/fig_*/data/` are the source of truth
 
-The paper figures read these CSVs directly. **Do not rewrite them** unless
+Released figure scripts read these CSVs or embedded result arrays. **Do not rewrite them** unless
 you re-ran Stage 4. If you re-run Stage 4 and the CSVs diverge from the
-committed values by more than 1e-4, treat that as a bug. Each fig folder
-ships both the complete cohort CSV and the small `figure_subset.csv`
-(exactly the rows plotted in the paper).
+committed values by more than 1e-4, treat that as a bug. Figure folders contain release-time result tables; some renderers also embed values. See `record/README.md` before treating them as current-paper inputs.
 
 ### 4. Adding a new model family
 
 1. Create `extractors/extract_7feat_<family>.py` mirroring an existing one
    (e.g. `extract_7feat_starvla.py`).
 2. Make sure the 7 features (`vit_raw`, `pre_llm`, `pre_llm_txt`,
-   `pre_llm_vt`, `img`, `txt`, `imgtext`) are saved as `feats_A_<variant>.pt`.
+   `pre_llm_vt`, `img`, `txt`, `imgtext`) are saved as the filenames listed in `docs/reference.md`.
 3. Pick an existing env that the model is compatible with, or add a new yaml
    under `repro_envs/yaml/` and a matching `.requirements.txt`.
 
@@ -112,7 +110,7 @@ conda run -n starVLA python compute/example/run_example.py \
     --feats_A compute/example/example_feats.pt \
     --trajs   compute/example/example_trajs.pt
 
-# Regenerate one paper figure (every fig has its own self-contained folder under record/)
+# Regenerate the released three-panel figure (current paper has four panels)
 conda run -n starVLA python record/fig_3.1_pa_predicts_sr_1x3/code/combined_3benchmarks_scatter.py
 
 # Full Stages 3 + 4 for VLA-SR on DROID
@@ -127,7 +125,7 @@ conda run -n starVLA python compute/compute_cknna.py …
 - Compiled PDF: `vla_idea/writing/cknna_vla/main_single.pdf`
 - Figure scripts: ship inside this repo at `record/fig_*/code/<regen>.py`. The
   paper repo at `vla_idea/writing/cknna_vla/figures/` holds an older copy used
-  to compile the paper standalone; the canonical version is here in `record/`.
+  to compile the paper standalone; the release here predates parts of the current paper; see `record/README.md` for coverage.
 
 ## Tests
 
@@ -141,8 +139,8 @@ bash extractors/run_all7_smoke.sh                     # N=10 across 8 raw VLMs (
 ## Style rules for prose / docs in this repo
 
 - READMEs use em-dashes sparingly; ai-content-checklist patterns apply.
-- Numeric paper claims must match `record/fig_*/data/*.csv` to 1e-4.
+- Distinguish current-paper claims from released CSV results; document discrepancies in `record/README.md` rather than changing CSVs to match prose.
 - Terminology audit: VLA ≠ VA ≠ VLM (three families, defined on first use).
 - Feature positions are named **ViT-out / LLM-in / LLM-out × {V, T, V+T}** in
   prose; on-disk filenames use the legacy slugs `vit_raw / pre_llm / pre_llm_txt
-  / pre_llm_vt / img / txt / imgtext`.
+  / pre_llm_vt / img / txt / imgtext` in CSVs; the joint-output tensor is `feats_A.pt`.

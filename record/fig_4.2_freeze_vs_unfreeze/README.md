@@ -1,10 +1,12 @@
 # fig_4.2_freeze_vs_unfreeze
 
-**Paper section**: §4.2 (sec:pa-reveals-frozen)
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `freeze-vs-unfreeze-bars.tex (Figure 5)`
+**Current-paper location:** §4.2; frozen vision encoder
 
-**Summary**: Two-panel bar chart: frozen vision encoder reduces S² by 41% (0.0245 → 0.0144) and downstream SimplerEnv SR by 40% (50.0 → 30.2). Demonstrates that VLA fine-tuning improves SR by reshaping the vision encoder toward stronger sensorimotor alignment.
+**Release coverage:** S² decreases by 41% and success rate by 40%. The renderer embeds its values.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -13,7 +15,7 @@
 - `data/figure_subset.csv`
 - `data/widowx_sr.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: Two specific Qwen2.5-VL-3B VLAs at imgtext h=7; values hardcoded in script

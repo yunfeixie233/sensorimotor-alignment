@@ -13,7 +13,7 @@ will work for most of them but a few entries need care:
 - `packaging @ file://...`: a conda-built artifact; pip will substitute the
   PyPI version harmlessly.
 
-See `../README.md` ([Setup](../README.md#setup)) for which model family uses which env and the per-env install gotchas.
+See [Setup and troubleshooting](../docs/setup.md) for which model family uses which env and the per-env install gotchas.
 
 | File | Env | torch / key versions |
 |------|-----|----------------------|

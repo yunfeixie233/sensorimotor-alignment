@@ -1,10 +1,12 @@
 # fig_4.1_vt_what_carries_2x3
 
-**Paper section**: §4.1 (sec:finding-what-carries) — modality dominance
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `vt-what-carries-2x3.tex (Figure 4, 2×3 panel matrix)`
+**Current-paper location:** §4.1; modality
 
-**Summary**: Decomposes the LLM-out feature into vision-only / text-only / vision+text. Top row: 12 finetuned VLAs; bottom row: 8 raw VLMs. Vision+text is the strongest predictor in both cohorts.
+**Release coverage:** Same qualitative finding. Released VLA text r=+0.238 and raw-VLM vision/text r=+0.426/+0.502 differ by 0.001 from the manuscript.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -15,7 +17,7 @@
 - `data/figure_subset.csv`
 - `data/widowx_sr.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: VLA: variants {img, txt, imgtext} at h=7 · VLM: variants {img, txt, imgtext} at h=3

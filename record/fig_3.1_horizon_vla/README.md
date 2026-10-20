@@ -1,10 +1,12 @@
 # fig_3.1_horizon_vla
 
-**Paper section**: §3.1 (horizon stability)
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `horizon-vla-llmout-vt.tex`
+**Current-paper location:** §3.3; trajectory horizons
 
-**Summary**: Pearson r vs DTW trajectory horizon h ∈ [1, 220] on DROID and h ∈ [1, 40] on BridgeV2. Demonstrates that the S²–SR correlation is stable across all measured horizons.
+**Release coverage:** DROID r ranges from +0.610 to +0.717. BridgeDataV2 exceeds +0.5 at h=3 through 40; h=1 is lower.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -14,7 +16,7 @@
 - `data/figure_subset.csv`
 - `data/widowx_sr.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: feats_A_variant=imgtext, per-horizon Pearson r over 12 VLAs

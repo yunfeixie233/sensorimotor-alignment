@@ -1,10 +1,12 @@
 # fig_appendix_paradigm_imagenet
 
-**Paper section**: §Appendix (app:paradigm-data-size)
+[Result index](../README.md) · [Main README](../../README.md)
 
-**Paper figure (.tex)**: `paradigm-imagenet-scatter.tex (Figure 9)`
+**Current-paper location:** Historical experiment, outside the current paper
 
-**Summary**: S² vs ImageNet top-1 across 22 standalone vision encoders (4 paradigms: Reconstruction-SSL / Self-distillation / Contrastive / JEPA). Per-encoder Pearson r=+0.576 (n=22, p=0.005). Paradigm-mean r=+0.907 (n=4 families).
+**Release coverage:** Standalone-encoder/ImageNet comparison. Distinct from the current 14-backbone policy-learning appendix.
+
+The directory name is historical. See the [coverage table](../README.md#coverage-and-current-paper-differences) before using these plots as current-paper reproductions.
 
 ## Files
 
@@ -15,7 +17,7 @@
 - `data/cknna_standalone_vit_jepa_complete.csv`
 - `data/figure_subset.csv`
 
-**Figure-subset rows** (the exact (model, x, y) points plotted in the paper figure):
+**Figure-subset rows** (the selected (model, x, y) points in this release):
 - `data/figure_subset.csv`
 
 **Filter / extraction**: COHORT list hardcoded in script (22 encoder × 4-paradigm cells); complete CSVs hold full per-(model, feature, horizon) S²
