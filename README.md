@@ -50,6 +50,7 @@ Run guide commands from the repository root in Bash. Each experiment guide inclu
 | Compute S² for the 8 raw VLM backbones | [VLM reproduction](docs/reproduce-vlm.md) |
 | Inspect the WAM results and available extraction code | [WAM reproduction and release coverage](docs/reproduce-wam.md) |
 | Reproduce modality, frozen-encoder, denoising, and layer analyses | [Representation-level explanations](docs/diagnostics.md) |
+| Find model families and checkpoint sources | [Model catalog](docs/models.md) |
 | Understand feature files, cache layout, or score another model | [Pipeline reference](docs/reference.md) |
 
 ## Paper results and release coverage
@@ -75,10 +76,19 @@ The real-robot result uses the exploratory horizon `h=110`; the prespecified `h=
 
 The [pipeline reference](docs/reference.md) describes feature positions, trajectory representations, and cache reuse. For a small metric example, see [the CUDA demo](docs/setup.md#small-metric-demo).
 
+![S² worked example](assets/pa_worked_example.png)
+
+For one DROID observation, the example compares four motor-neighbor episodes with neighbors in sensory-feature space. A model with higher S² recovers more of the trajectory-similar neighbors.
+
+See [resource estimates and cache reuse](docs/reference.md#resource-estimates-from-the-original-release) before a full run.
+
 ## Repository layout
 
 ```text
-docs/            Setup, experiment guides, and pipeline reference
+README.md        Project overview and guide navigation
+paths.env.example Machine-local path template
+config.py        Path-configuration loader
+docs/            Setup, experiment guides, model catalog, and pipeline reference
 data/            Dataset preparation
 extractors/      Model feature extraction
 compute/         DTW and CKNNA computation; small example
@@ -104,3 +114,5 @@ tests/           Path, import, and extraction checks
 ## Acknowledgements and license
 
 Our metric builds on CKNNA from [The Platonic Representation Hypothesis](https://github.com/minyoungg/platonic-rep). We thank the authors of the model, dataset, and evaluation releases used in this project; see [upstream acknowledgements](docs/acknowledgements.md). See [LICENSE](LICENSE) and the licenses accompanying the code under `repos/`.
+
+The [original README](docs/archive/README.md) is preserved with the documentation for comparison.

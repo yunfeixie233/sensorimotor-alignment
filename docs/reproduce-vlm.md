@@ -104,3 +104,7 @@ The figure scripts read the committed tables, not the new CSV under `$DATA_STORE
 conda run -n starVLA python record/fig_3.2_pa_vs_vqa_simpler/code/regen_pa_vs_vqa_simpler.py
 conda run -n starVLA python record/fig_4.1_vt_what_carries_2x3/code/regen_what_carries_2x3.py
 ```
+
+## Released result preview
+
+![Released S² and VQA comparison](../record/fig_3.2_pa_vs_vqa_simpler/pa_vs_vqa_simpler.png)

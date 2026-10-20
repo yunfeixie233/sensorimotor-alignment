@@ -112,3 +112,11 @@ conda run -n starVLA python record/fig_appendix_paradigm_imagenet/code/paradigm_
 ```
 
 The renderer uses its released inputs. A new extraction/scoring run needs a checked input update before it changes the rendered result.
+
+## Experimental context and original references
+
+The frozen-encoder comparison uses a Qwen2.5-VL-3B backbone with an FCDecoder action head, fine-tuned on BridgeDataV2 under the [VLM4VLA recipe](https://arxiv.org/pdf/2601.03309). The matched variants differ in whether the vision encoder is trainable.
+
+The denoising analysis relates to [Fast-WAM](https://arxiv.org/abs/2603.16666), which studies skipping iterative video generation. The layer analysis relates to [Demystifying Video Reasoning](https://arxiv.org/abs/2603.16870). The original rollout analysis described 50 RoboTwin tasks with 10 episodes per task, three WAMs, seven feature positions, and five schedule samples. Recomputing it requires the corresponding rollout caches, not just a destination CSV.
+
+The retained encoder/ImageNet analysis reports per-encoder `r=+0.576` over 22 encoders with published ImageNet scores, and paradigm-mean `r=+0.907` over four groups (two-tailed `p=0.094`). This historical experiment is outside the current paper. Its group-level association does not establish a general within-family scaling law.

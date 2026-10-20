@@ -83,3 +83,18 @@ Each script writes PDFs and, where implemented, PNG previews into its figure fol
 The experiment guides write new scores to `$DATA_STORE/results/` to preserve the released tables. Plot scripts read their own `data/` files or embedded arrays; they do not pick up a new score file automatically.
 
 Compare the model IDs, feature labels, horizons, episode counts, and scores first. Then update inputs in a separate checkout or copy of the figure folder. The same score table can appear in multiple figure directories, so update each intended consumer explicitly.
+
+## Batch-render the released figures
+
+After activating the CPU figure environment, this convenience loop reproduces the released plots, including the historical encoder/ImageNet plot:
+
+```bash
+for figure_dir in record/fig_*/; do
+    for figure_script in "$figure_dir"/code/*.py; do
+        [ "$(basename "$figure_script")" = "sweep_k_droid.py" ] && continue
+        python "$figure_script" || break 2
+    done
+done
+```
+
+The GPU k-sweep remains excluded. For its released `h=7` summary, Pearson r ranges from `+0.644` to `+0.717` over `k ∈ {2, 5, 10, 15, 20}`. Use the per-figure instructions when selecting only current-paper analyses.

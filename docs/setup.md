@@ -86,3 +86,68 @@ The released CSV plots and offline reference-dataset extraction do not need a si
 ## A figure or score differs from the paper
 
 Check the [release coverage table](../record/README.md) first. Some released figures predate the current manuscript. For a new S² run, compare the model IDs, feature position, horizon, episode order, and neighbor count with the committed CSV. Use a separate output directory until the values have been checked.
+
+## Pip fallback template
+
+If Conda cannot resolve a model environment, the original fallback creates an environment with that snapshot's Python version, installs its CUDA PyTorch pair, then installs the matching requirements. Set the variables below from the relevant [environment snapshot](../repro_envs/README.md), and review machine-local package references first:
+
+```bash
+: "${REPRO_ENV:?Set the environment name from repro_envs}"
+: "${REPRO_PYTHON:?Set its Python version}"
+: "${REPRO_TORCH:?Set its PyTorch version}"
+: "${REPRO_TORCHVISION:?Set its torchvision version}"
+: "${REPRO_CUDA_INDEX:?Set its CUDA wheel suffix, for example cu121}"
+conda create -n "$REPRO_ENV" "python=$REPRO_PYTHON" -y
+conda run -n "$REPRO_ENV" python -m pip install \
+    "torch==$REPRO_TORCH" "torchvision==$REPRO_TORCHVISION" \
+    --index-url "https://download.pytorch.org/whl/$REPRO_CUDA_INDEX"
+conda run -n "$REPRO_ENV" python -m pip install \
+    -r "repro_envs/$REPRO_ENV.requirements.txt" --no-cache-dir
+```
+
+The earlier README warned that model dependency installation, including `lerobot`, `openvla`, or `flax`, could replace a CUDA PyTorch installation. Treat this as an environment check rather than a claim about every package installation: if the CUDA build changed, reinstall the matching PyTorch pair and rebuild `flash-attn` for that version.
+
+## Hugging Face access check
+
+After accepting the required model licenses and logging in, check the active account:
+
+```bash
+conda run -n starVLA hf auth whoami
+```
+
+For an environment with the older CLI, use `huggingface-cli whoami`. CogACT's Llama-2 dependency and the PaliGemma models require the relevant access.
+
+## Optional RoboTwin host setup
+
+This is for separate simulator rollouts, not offline ALOHA scoring or figure rendering. Skip cloning and environment creation when they already exist:
+
+```bash
+git clone https://github.com/RoboTwin-Platform/RoboTwin "${WORK}/RoboTwin"
+conda env create -f repro_envs/yaml/robotwin.yaml
+```
+
+The original Linux setup copied the NVIDIA EGL vendor configuration into a directory visible to SAPIEN. On hosts with the source file below, the corresponding commands are:
+
+```bash
+sudo mkdir -p /usr/share/glvnd/egl_vendor.d
+sudo cp /etc/glvnd/egl_vendor.d/10_nvidia.json /usr/share/glvnd/egl_vendor.d/
+sudo apt-get install -y libegl1
+conda run -n robotwin python -c "import sapien; print(sapien.__version__)"
+```
+
+If the source JSON is absent, check the installed NVIDIA EGL driver configuration. The original fallback JSON named `libEGL_nvidia.so.0`; creating that file does not install the driver library. `vulkaninfo --summary` should identify NVIDIA rather than `llvmpipe`, with a driver consistent with `nvidia-smi`.
+
+## Larger metric example
+
+After preparing DROID, CogACT-Base vision features, and the `h=40` DTW cache, the supplied helper can regenerate the full example:
+
+```bash
+conda run -n starVLA python compute/example/prepare_example_data.py
+conda run -n starVLA python compute/example/run_example.py \
+    --feats_A compute/example/full_feats_img.pt \
+    --trajs compute/example/full_trajs_h40.pt \
+    --dtw_cache compute/example/dtw_topk_h40_k10.npy \
+    --device cpu
+```
+
+The helper also rewrites the two small fixtures. The full tensors and cache are generated locally; they are not included in a fresh clone. The old README estimated about 130 MB for these files. The small fixtures are about 350 KB.

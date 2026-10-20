@@ -182,3 +182,7 @@ For the 12-model DROID cohort, compare the `imgtext`, `horizon=7` rows with the 
 New scores above go to `$DATA_STORE/results/`. Figure scripts read their own committed `record/fig_*/data/` copies; they do not automatically read the new CSV. After checking the new run, use a separate checkout or figure folder to substitute the corresponding input tables. Keep the original tables for comparison.
 
 The [figure guide](../record/README.md) lists the plot commands. The released combined scatter has three panels and a three-WAM cohort; it does not reproduce the current paper's four-panel result.
+
+## Released result preview
+
+![Released 12-model VLA correlation](../assets/scatter_vla.png)

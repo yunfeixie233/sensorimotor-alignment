@@ -60,3 +60,38 @@ The released scatter scripts filter model names and cohorts; adding a row does n
 The original download instructions estimate about 1.7 TB for DROID and 124 GB for BridgeDataV2. Model checkpoints and generated features require additional space. The old README's 46-model / 50-GPU-hour total described a different set of experiments and should not be used as a budget for the current paper.
 
 For development, use the small metric demo or a small extraction subset first. A subset changes the reference distribution and is not an exact reproduction of the reported scores.
+
+## Resource estimates from the original release
+
+These are the original README's approximate measurements for one A100, preserved for planning. They have not been remeasured in this documentation revision and do not cover all experiments in the current paper. Prepared-cache sizes exclude raw datasets and model checkpoints.
+
+| Stage | Original time estimate | Original additional disk estimate |
+|---|---|---|
+| Dataset preparation | 1–3 h per reference dataset, originally including download/scan | 0.6 GB per prepared reference dataset |
+| Feature extraction | ≈1 h per VLA or raw VLM; ≈5 h per WAM; ≈10 min per standalone encoder | ≈8 GB per reference dataset of about 6,000 episodes |
+| Motor kernel | 1–4 h per reference dataset over the horizon sweep | 1–2 GB per reference dataset |
+| S² scoring | 1–3 min for the original batch of model/feature/horizon combinations | 0.1 GB |
+| Figures | Seconds | <10 MB |
+
+The original aggregate estimates were ≈50 GPU-hours for the former 46-model catalog and ≈5–10 GPU-hours for DTW across DROID, BridgeDataV2, and ALOHA. Network speed, model choice, trajectory length, and batching change these costs. The scoring script itself also quotes 5–15 minutes for another batch size; use these figures as rough historical observations.
+
+Additional original estimates: about 24 GB of features for the three WAMs; approximately 10 GB for the shared Wan backbone, 5 GB for Motus, 3 GB for the Vidar overlay, and 12 GB for LingBot-VA's modules. The earlier README listed KosMos-2 on an 8 GB GPU and CogACT-Small on 16 GB. Those memory estimates have not been validated here; a small extraction run checks suitability before a full run. One or two models cannot reproduce a full-cohort correlation.
+
+## Legacy cache names
+
+Older runs may use the following names:
+
+| Historical name | Current convention |
+|---|---|
+| `cknna_data_<dataset>_v2/` | `cknna_data_<dataset>/` |
+| `cknna_data_bridge_filtered_seq/` | `cknna_data_bridge/` |
+| `cknna_data_<dataset>_v2_<N>feat/` | `cknna_data_<dataset>_<N>feat/` |
+| `record/dtw_cache/cknna_data_<dataset>_v2/groupL/` | `record/dtw_cache/<dataset>/` |
+
+The old README described these as naming-only changes. Verify metadata, episode order, feature shapes, and DTW settings before reusing a cache under a new path; a matching directory name alone does not establish compatibility. Preserve the old cache until that check is complete.
+
+## Model metadata for an additional VLA
+
+The original extension recipe used `model_key`, `success_rate`, `benchmark`, `huggingface_path`, and `group` columns in `record/fig_3.1_pa_predicts_sr_1x3/data/widowx_sr.csv`. Use a copy of that table for a new cohort.
+
+Choose the matching extractor, such as `extract_7feat_starvla.py`, `extract_7feat_cogact.py`, or `extract_7feat_groot.py`. Their checkpoint options differ (`--ckpt_path` versus `--ckpt`); inspect the selected script. Reuse DTW only for the same reference samples. The score command discovers feature directories, while plot scripts may apply additional cohort filters.
