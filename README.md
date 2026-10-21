@@ -11,7 +11,12 @@
 </p>
 
 <p align="center">
-  <a href="https://yunfeixie233.github.io/s2/">Project website</a> ·
+  <a href="https://yunfeixie233.github.io/s2/assets/s2-walkthrough.mp4?v=6c1d33433e"><img src="assets/badges/video.svg" alt="Video" height="32"></a>
+  <a href="https://yunfeixie233.github.io/s2/"><img src="assets/badges/website.svg" alt="Project website" height="32"></a>
+  <img src="assets/badges/paper-coming-soon.svg" alt="Paper (coming soon)" height="32">
+</p>
+
+<p align="center">
   <a href="#getting-started">Getting started</a> ·
   <a href="#reproduction-guides">Reproduction guides</a> ·
   <a href="#citation">Citation</a>
@@ -21,7 +26,7 @@
 
 ## Abstract
 
-Robotic foundation models are typically evaluated through costly closed-loop rollouts, which motivates cheap offline proxies for model capability. The Platonic Representation Hypothesis (PRH) suggests that as representations improve, different modalities such as vision and language converge toward a shared statistical model of reality. We ask whether motion trajectories form another such modality: as robot models become more capable, should their sensory representations converge toward the structure of physical motion? To examine this, we propose **Sensorimotor Alignment** (S²), a training-free offline metric that measures how well a model's sensory representation aligns with the geometry of physical motion. We find that S² correlates positively with downstream robot task success across embodied model families, making it a low-cost offline proxy for prioritizing models before closed-loop evaluation. S² can also identify promising vision-language model (VLM) backbones even *before* costly fine-tuning into vision-language-action models (VLAs). Beyond this correlation, S² offers representation-level explanations for phenomena observed in VLAs and world action models (WAMs). With S², we extend PRH to embodied models and make sensorimotor alignment empirically measurable, offering insight into why an embodied model succeeds beyond its closed-loop success rate.
+Robotic foundation models are typically evaluated through costly closed-loop rollouts, which motivates cheap offline proxies for model capability. The Platonic Representation Hypothesis (PRH) suggests that as representations improve, different modalities such as vision and language converge toward a shared statistical model of reality. We ask whether motion trajectories form another such modality: as embodied models become more capable, should their sensory representations converge toward the structure of physical motion? To examine this, we propose **Sensorimotor Alignment** (S²), a training-free offline metric that measures how well a model's sensory representation aligns with the geometry of physical motion. We find that S² correlates positively with downstream robot task success across embodied model families, making it a low-cost offline proxy for prioritizing models before closed-loop evaluation. S² can also identify promising vision-language model (VLM) backbones even *before* costly fine-tuning into vision-language-action models (VLAs). Beyond this correlation, S² offers representation-level explanations for phenomena observed in VLAs and world action models (WAMs). With S², we extend PRH to embodied models and make sensorimotor alignment empirically measurable, offering insight into why an embodied model succeeds beyond its closed-loop success rate.
 
 ## Getting started
 
