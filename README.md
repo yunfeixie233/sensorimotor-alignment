@@ -13,7 +13,7 @@
 <p align="center">
   <a href="https://yunfeixie233.github.io/s2/assets/s2-walkthrough.mp4?v=6c1d33433e"><img src="assets/badges/video.svg" alt="Video" height="32"></a>
   <a href="https://yunfeixie233.github.io/s2/"><img src="assets/badges/website.svg" alt="Project website" height="32"></a>
-  <img src="assets/badges/paper-coming-soon.svg" alt="Paper (coming soon)" height="32">
+  <a href="https://arxiv.org/abs/2610.31670"><img src="assets/badges/paper.svg" alt="Paper" height="32"></a>
 </p>
 
 <p align="center">
@@ -112,7 +112,10 @@ tests/           Path, import, and extraction checks
   title = {Sensorimotor Alignment: A Platonic Proxy for Embodied Policy Success},
   author = {Xie, Yunfei and Qian, Howard H. and Lan, Shiyi and Hang, Kaiyu and Wei, Chen},
   year = {2026},
-  url = {https://yunfeixie233.github.io/s2/}
+  eprint = {2610.31670},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CV},
+  url = {https://arxiv.org/abs/2610.31670}
 }
 ```
 
